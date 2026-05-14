@@ -1,0 +1,196 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  # Name of the Kubernetes ConfigMap used by the Homepage pod
+  name: homepage-config
+
+  # Namespace where Homepage is installed
+  namespace: homepage
+
+data:
+  # Main Homepage settings
+  settings.yaml: |
+    # Title shown at the top of your dashboard
+    title: Qian's Homelab
+
+    # Homepage theme
+    # Common options: dark, light
+    theme: dark
+
+    # Accent color
+    # Common options: slate, gray, zinc, neutral, stone, red, orange, yellow, green, blue, violet
+    color: slate
+
+    # Header style
+    # Options usually include: boxed, clean, underlined
+    headerStyle: boxed
+
+    # This controls how groups are displayed on the page
+    layout:
+      # Infrastructure section
+      Infrastructure:
+        # Change this to row or column
+        style: column
+
+        # Number of columns/cards in this section
+        columns: 2
+
+      # Main applications section
+      Apps:
+        style: column
+        columns: 2
+
+      # Network tools section
+      Network:
+        style: column
+        columns: 2
+
+      # Monitoring tools section
+      Monitoring:
+        style: column
+        columns: 2
+
+  # Services are the application cards shown on the dashboard
+  services.yaml: |
+    # Infrastructure group
+    - Infrastructure:
+        # Kubernetes card
+        - Kubernetes:
+            href: http://192.168.1.240
+            description: Talos Kubernetes cluster
+            icon: kubernetes.png
+
+        # Traefik card
+        - Traefik:
+            href: http://192.168.1.240
+            description: Ingress controller for Kubernetes apps
+            icon: traefik.png
+
+        # Longhorn card
+        - Longhorn:
+            href: http://longhorn.home.arpa
+            description: Kubernetes persistent storage
+            icon: longhorn.png
+
+        # Proxmox card
+        # Change the IP if your Proxmox host is not 192.168.1.1
+        - Proxmox:
+            href: https://192.168.1.1:8006
+            description: Virtualization host
+            icon: proxmox.png
+
+    # Apps group
+    - Apps:
+        # Homepage card
+        - Homepage:
+            href: http://homepage.home.arpa
+            description: Homelab dashboard
+            icon: homepage.png
+
+        # Home Assistant card
+        - Home Assistant:
+            href: http://homeassistant.home.arpa
+            description: Smart home dashboard
+            icon: home-assistant.png
+
+        # Vaultwarden card
+        # Use https because Vaultwarden needs HTTPS for proper browser use
+        - Vaultwarden:
+            href: https://vaultwarden.home.arpa
+            description: Password manager
+            icon: vaultwarden.png
+
+        # Uptime Kuma card
+        - Uptime Kuma:
+            href: http://uptime.home.arpa
+            description: Service monitoring
+            icon: uptime-kuma.png
+
+    # Network group
+    - Network:
+        # OPNsense card
+        # Change this IP if your router/firewall uses a different address
+        - OPNsense:
+            href: https://192.168.1.1
+            description: Firewall, router, VLANs, and DHCP
+            icon: opnsense.png
+
+        # Pi-hole card
+        # If pi.hole does not work, replace with the Pi-hole IP, like http://192.168.1.10/admin
+        - Pi-hole:
+            href: http://pi.hole/admin
+            description: DNS ad blocker
+            icon: pi-hole.png
+
+        # MetalLB card
+        - MetalLB:
+            href: http://192.168.1.240
+            description: Kubernetes LoadBalancer IP service
+            icon: kubernetes.png
+
+    # Monitoring group
+    - Monitoring:
+        # Uptime Kuma card
+        - Uptime Kuma:
+            href: http://uptime.home.arpa
+            description: Monitor homelab services
+            icon: uptime-kuma.png
+
+        # Longhorn storage health card
+        - Longhorn Storage:
+            href: http://longhorn.home.arpa
+            description: Persistent volume and disk health
+            icon: longhorn.png
+
+  # Bookmarks are simple link groups
+  bookmarks.yaml: |
+    # Homelab bookmark group
+    - Homelab:
+        # Proxmox bookmark
+        - Proxmox:
+            - href: https://192.168.1.1:8006
+
+        # OPNsense bookmark
+        - OPNsense:
+            - href: https://192.168.1.1
+
+        # Pi-hole bookmark
+        - Pi-hole:
+            - href: http://pi.hole/admin
+
+    # Learning bookmark group
+    - Learning:
+        # Kubernetes documentation
+        - Kubernetes Docs:
+            - href: https://kubernetes.io/docs/
+
+        # Talos documentation
+        - Talos Docs:
+            - href: https://www.talos.dev/
+
+        # Longhorn documentation
+        - Longhorn Docs:
+            - href: https://longhorn.io/docs/
+
+  # Widgets shown on Homepage
+  widgets.yaml: |
+    # Search bar widget
+    - search:
+        provider: duckduckgo
+        target: _blank
+
+    # System resource widget
+    # Shows CPU, memory, and disk usage from inside the Homepage container
+    - resources:
+        cpu: true
+        memory: true
+        disk: /
+
+  # Docker integration disabled because you are using Kubernetes/Talos, not Docker
+  docker.yaml: |
+    {}
+
+  # Kubernetes integration disabled for now
+  # Later we can enable this so Homepage can see Kubernetes resources
+  kubernetes.yaml: |
+    mode: disabled
