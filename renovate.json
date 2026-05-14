@@ -1,0 +1,17 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "kubernetes": {
+    "fileMatch": ["\\.ya?ml$"]
+  },
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["major"],
+      "labels": ["major-update", "needs-review"]
+    },
+    {
+      "matchPackageNames": ["postgres", "n8nio/n8n", "cilium", "cert-manager", "external-secrets", "fluxcd/flux-cli", "longhornio/longhorn-manager"],
+      "labels": ["infrastructure", "needs-review"]
+    }
+  ]
+}
