@@ -41,7 +41,7 @@ metadata:
   namespace: external-services
 spec:
   entryPoints:
-    - websecure
+    - web
   routes:
     - match: Host(`proxmox.home.arpa`)
       kind: Rule
