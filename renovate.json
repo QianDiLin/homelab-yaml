@@ -10,7 +10,7 @@
       "labels": ["major-update", "needs-review"]
     },
     {
-      "matchPackageNames": ["postgres", "n8nio/n8n", "cilium", "cert-manager", "external-secrets", "fluxcd/flux-cli", "longhornio/longhorn-manager"],
+      "matchPackageNames": ["postgres", "n8nio/n8n", "cilium", "cert-manager", "external-secrets", "longhornio/longhorn-manager"],
       "labels": ["infrastructure", "needs-review"]
     }
   ]
