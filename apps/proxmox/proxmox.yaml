@@ -41,7 +41,7 @@ metadata:
   namespace: external-services
 spec:
   entryPoints:
-    - web
+    - websecure
   routes:
     - match: Host(`proxmox.home.arpa`)
       kind: Rule
@@ -49,4 +49,6 @@ spec:
         - name: proxmox
           port: 8006
           scheme: https
+          passHostHeader: true
           serversTransport: proxmox-transport
+  tls: {}
