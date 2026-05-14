@@ -29,6 +29,8 @@ metadata:
   namespace: n8n
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: n8n-postgres
