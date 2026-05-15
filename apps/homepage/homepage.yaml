@@ -46,7 +46,7 @@ data:
             description: Homelab service uptime
             icon: uptime-kuma.png
              widget:
-               type: uptimekuma
+              type: uptimekuma
               url: http://uptime-kuma.uptime-kuma.svc.cluster.local:3001
               slug: home
               fields: ["up", "down", "uptime", "incident"]
