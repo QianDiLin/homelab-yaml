@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: homelab-app-uptime
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  interval: 30s
+  module: http_2xx
+  prober:
+    url: blackbox-exporter-prometheus-blackbox-exporter.monitoring.svc.cluster.local:9115
+  targets:
+    staticConfig:
+      static:
+        - http://vaultwarden.home.arpa
+        - http://homepage.home.arpa
+        - http://uptime.home.arpa
+        - http://longhorn.home.arpa
+        - http://grafana.home.arpa
