@@ -64,15 +64,21 @@ data:
             icon: vaultwarden.png
 
     - Network:
+        - Pi-hole:
+            href: http://192.168.1.10/admin
+            description: Network DNS ad-blocking
+            icon: pi-hole.png
+            widget:
+                type: pihole
+                url: http://192.168.1.10
+                version: 6
+                key: "5Nz+OpTbrHPolA183CLxJYfP4okJhXOtK0ZXj+3v/BM="
+                fields: ["queries", "blocked", "blocked_percent", "gravity"]
+
         - OPNsense:
             href: https://192.168.1.1
             description: Firewall, router, VLANs, and DHCP
             icon: opnsense.png
-
-        - Pi-hole:
-            href: http://pi.hole/admin
-            description: DNS ad blocker
-            icon: pi-hole.png
 
         - MetalLB:
             href: http://192.168.1.240
