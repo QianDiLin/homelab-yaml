@@ -37,17 +37,7 @@ spec:
 
     prometheus:
       prometheusSpec:
-        retention: 15d
-        storageSpec:
-          volumeClaimTemplate:
-            spec:
-              storageClassName: longhorn-single
-              accessModes:
-                - ReadWriteOnce
-              resources:
-                requests:
-                  storage: 10Gi
-
+        retention: 24h
     alertmanager:
       enabled: true
       alertmanagerSpec:
