@@ -65,7 +65,7 @@ data:
 
     - Network:
         - Pi-hole:
-            href: http://192.168.1.10/admin
+            href: http://192.168.1.10
             description: Network DNS ad-blocking
             icon: pi-hole.png
             widget:
