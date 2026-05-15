@@ -45,7 +45,7 @@ data:
             href: http://uptime.home.arpa/status/home
             description: Homelab service uptime
             icon: uptime-kuma.png
-             widget:
+            widget:
               type: uptimekuma
               url: http://uptime-kuma.uptime-kuma.svc.cluster.local:3001
               slug: home
