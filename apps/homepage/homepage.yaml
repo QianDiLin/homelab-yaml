@@ -78,8 +78,7 @@ data:
             href: http://192.168.1.240
             description: Kubernetes LoadBalancer IP service
             icon: kubernetes.png
-
-    - Monitoring:
+        
         - Uptime Kuma:
             href: http://uptime.home.arpa
             description: Monitor homelab services
@@ -88,7 +87,7 @@ data:
   bookmarks.yaml: |
     - Homelab:
         - Proxmox:
-            - href: https://192.168.1.1:8006
+            - href: http://proxmox.home.arpa
 
         - OPNsense:
             - href: https://192.168.1.1
