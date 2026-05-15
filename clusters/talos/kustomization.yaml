@@ -9,3 +9,4 @@ resources:
   - ../../apps/homeassistant
   - ../../apps/forgejo
   - ../../apps/proxmox
+  - ../../apps/monitoring
