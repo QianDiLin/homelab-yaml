@@ -72,7 +72,7 @@ data:
                 type: pihole
                 url: http://192.168.1.10
                 version: 6
-                key: "5Nz+OpTbrHPolA183CLxJYfP4okJhXOtK0ZXj+3v/BM="
+                key: "{{HOMEPAGE_VAR_PIHOLE_KEY}}"
                 fields: ["queries", "blocked", "blocked_percent", "gravity"]
 
         - OPNsense:
