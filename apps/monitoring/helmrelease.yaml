@@ -41,12 +41,12 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: longhorn
+              storageClassName: longhorn-single
               accessModes:
                 - ReadWriteOnce
               resources:
                 requests:
-                  storage: 20Gi
+                  storage: 10Gi
 
     alertmanager:
       enabled: true
