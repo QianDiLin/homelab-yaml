@@ -12,6 +12,9 @@ data:
     headerStyle: boxed
 
     layout:
+      Status:
+        style: column
+        columns: 1
       Infrastructure:
         style: column
         columns: 2
@@ -26,6 +29,28 @@ data:
         columns: 2
 
   services.yaml: |
+    - Status:
+        - Pi-hole:
+            href: http://192.168.1.10
+            description: Network DNS ad-blocking
+            icon: pi-hole.png
+            widget:
+              type: pihole
+              url: http://192.168.1.10
+              version: 6
+              key: "{{HOMEPAGE_VAR_PIHOLE_KEY}}"
+              fields: ["queries", "blocked", "blocked_percent", "gravity"]
+
+        - Uptime Kuma:
+            href: http://uptime.home.arpa/status/homelab
+            description: Homelab service uptime
+            icon: uptime-kuma.png
+            widget:
+              type: uptimekuma
+              url: http://uptime.home.arpa
+              slug: homelab
+              fields: ["up", "down", "uptime", "incident"]
+
     - Infrastructure:
         - Kubernetes:
             href: https://github.com/QianDiLin/homelab-yaml
@@ -64,17 +89,6 @@ data:
             icon: vaultwarden.png
 
     - Network:
-        - Pi-hole:
-            href: http://192.168.1.10
-            description: Network DNS ad-blocking
-            icon: pi-hole.png
-            widget:
-                type: pihole
-                url: http://192.168.1.10
-                version: 6
-                key: "{{HOMEPAGE_VAR_PIHOLE_KEY}}"
-                fields: ["queries", "blocked", "blocked_percent", "gravity"]
-
         - OPNsense:
             href: https://192.168.1.1
             description: Firewall, router, VLANs, and DHCP
@@ -84,11 +98,7 @@ data:
             href: http://192.168.1.240
             description: Kubernetes LoadBalancer IP service
             icon: kubernetes.png
-        
-        - Uptime Kuma:
-            href: http://uptime.home.arpa
-            description: Monitor homelab services
-            icon: uptime-kuma.png
+
 
   bookmarks.yaml: |
     - Homelab:
