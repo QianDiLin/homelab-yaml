@@ -1,4 +1,4 @@
-# Kubernetes Homelab
+# Qian's Homelab
 
 A self-hosted homelab built to practice real-world infrastructure, Kubernetes administration, GitOps, networking, monitoring, and DevOps workflows. This environment is designed as both a personal home server stack and a portfolio project for entry-level IT, help desk, NOC, networking, and DevOps-focused roles.
 
@@ -83,33 +83,86 @@ This allows the cluster state to be managed from version-controlled YAML files i
 
 ## Networking and Ingress
 
+The homelab network is built around OPNsense, Pi-hole, a managed switch, VLANs, Proxmox virtualization, and a Talos Kubernetes cluster. OPNsense and Pi-hole run as virtual machines on the Proxmox host, while the Kubernetes applications run on Talos VMs.
+
+```text
+Network Diagram
+
+                [ Internet ]
+                     │
+              [ Proxmox Host ]
+                     │
+        ┌────────────┴────────────┐
+        │   OPNsense VM           │
+        │   Router / Firewall     │
+        │   VLANs / DHCP          │
+        └────────────┬────────────┘
+                     │
+              [ Managed Switch ]
+          ┌──────────┼──────────┐
+          │          │          │
+      Main PC     VLAN 10    VLAN 20
+   Admin PC      Servers     Lab / Test
+                     │
+              [ Proxmox Host ]
+          ┌──────────┼──────────────────────────┐
+          │          │                          │
+       Pi-hole   Talos Kubernetes Cluster       Lab VMs
+       DNS       │                              Test Apps
+       Adblock   │                              Temporary VMs
+                 │
+          ┌──────┴──────────────────┐
+          │  Traefik Ingress         │
+          │  192.168.1.240           │
+          │                          │
+          ├─ Homepage
+          ├─ Longhorn
+          ├─ Vaultwarden
+          ├─ Uptime Kuma
+          ├─ Forgejo
+          ├─ Home Assistant
+          └─ Grafana / Prometheus
+```
+
+### OPNsense
+
+OPNsense runs as a VM on the Proxmox host and acts as the main router and firewall for the homelab. It handles internet access, firewall rules, VLAN routing, DHCP, and network segmentation between the main network, server network, and lab/test network.
+
+This gives the homelab a more realistic network design because traffic is routed and filtered through a dedicated firewall instead of relying only on a basic consumer router.
+
+### Pi-hole
+
+Pi-hole also runs as a VM on the Proxmox host, separate from Kubernetes. It provides DNS and ad-blocking for the homelab network.
+
+Pi-hole is used for internal DNS records so services can be accessed with readable hostnames instead of IP addresses. These hostnames point to the Traefik LoadBalancer IP.
+
+Example internal DNS records:
+
+```text
+homepage.home.arpa      -> 192.168.1.240
+longhorn.home.arpa      -> 192.168.1.240
+grafana.home.arpa       -> 192.168.1.240
+uptime.home.arpa        -> 192.168.1.240
+vaultwarden.home.arpa   -> 192.168.1.240
+forgejo.home.arpa       -> 192.168.1.240
+homeassistant.home.arpa -> 192.168.1.240
+```
+
 ### Traefik
 
-Traefik is used as the Kubernetes ingress controller. It receives traffic on the shared LoadBalancer IP and routes requests to the correct application based on hostname.
-
-Current Traefik LoadBalancer IP:
+Traefik runs inside the Talos Kubernetes cluster as the ingress controller. It receives traffic on the shared LoadBalancer IP:
 
 ```text
 192.168.1.240
 ```
 
-Applications are not normally accessed by the raw IP address. Instead, they are accessed through internal hostnames such as:
+Applications are not normally accessed by the raw IP address. Instead, Pi-hole resolves internal hostnames like `homepage.home.arpa` or `grafana.home.arpa` to `192.168.1.240`. Traefik then uses the hostname in the request to route traffic to the correct Kubernetes service.
 
-```text
-homepage.home.arpa
-longhorn.home.arpa
-grafana.home.arpa
-uptime.home.arpa
-vaultwarden.home.arpa
-forgejo.home.arpa
-homeassistant.home.arpa
-```
-
-This allows multiple applications to share the same ingress IP while still routing to the correct backend service.
+This allows multiple applications to share the same ingress IP while still routing correctly by hostname.
 
 ### Traefik Dashboard
 
-The Traefik dashboard is not exposed publicly by default. For safety, it can be accessed locally using a temporary port-forward:
+The Traefik dashboard is not exposed as a normal public service. For safer access, it is opened only when needed through a local port-forward:
 
 ```powershell
 kubectl port-forward -n traefik deployment/traefik 8080:8080
@@ -121,7 +174,7 @@ Then open:
 http://localhost:8080/dashboard/#/
 ```
 
-This keeps the dashboard from being exposed as a normal network service while still allowing local administration when needed.
+This keeps the dashboard from being permanently exposed on the network while still allowing local administration from the Windows admin PC.
 
 ## Storage
 
@@ -224,6 +277,59 @@ http://homeassistant.home.arpa
 ```
 
 This service allows the homelab to connect infrastructure practice with real home automation use cases.
+
+## Screenshots
+
+Screenshots can be added to show the homelab running in a real environment. Store screenshots in an `images/` folder inside this repository.
+
+```text
+homelab-yaml/
+├── images/
+│   ├── homepage-dashboard.png
+│   ├── kubernetes-nodes.png
+│   ├── traefik-dashboard.png
+│   ├── longhorn-dashboard.png
+│   ├── grafana-dashboard.png
+│   └── proxmox-vms.png
+```
+
+### Homepage Dashboard
+
+![Homepage Dashboard](images/homepage-dashboard.png)
+
+The Homepage dashboard provides a central landing page for the homelab and links to the main self-hosted services.
+
+### Kubernetes Cluster Nodes
+
+![Kubernetes Nodes](images/kubernetes-nodes.png)
+
+This screenshot shows the Talos Kubernetes nodes running and reachable from the Windows administration PC using `kubectl`.
+
+### Traefik Ingress Dashboard
+
+![Traefik Dashboard](images/traefik-dashboard.png)
+
+The Traefik dashboard shows ingress routing, routers, services, and middleware used to expose Kubernetes applications through internal hostnames.
+
+### Longhorn Storage Dashboard
+
+![Longhorn Dashboard](images/longhorn-dashboard.png)
+
+Longhorn provides persistent storage for Kubernetes workloads and allows storage health, volumes, replicas, and nodes to be monitored from a web dashboard.
+
+### Grafana Monitoring
+
+![Grafana Dashboard](images/grafana-dashboard.png)
+
+Grafana is used to visualize Kubernetes and homelab monitoring data from the Prometheus stack.
+
+### Proxmox Virtual Machines
+
+![Proxmox VMs](images/proxmox-vms.png)
+
+The Proxmox view shows the virtual machines used to run OPNsense, Pi-hole, Talos Kubernetes nodes, and lab/test systems.
+
+Before uploading screenshots, sensitive information such as passwords, tokens, private keys, public IP addresses, and personal email addresses should be hidden or cropped out.
 
 ## Repository Structure
 
