@@ -5,3 +5,5 @@ resources:
   - longhorn-single-storageclass.yaml
   - helmrepository.yaml
   - helmrelease.yaml
+  - blackbox-helmrelease.yaml
+  - app-uptime-probes.yaml
