@@ -42,15 +42,15 @@ data:
               fields: ["queries", "blocked", "blocked_percent", "gravity"]
 
         - Uptime Kuma:
-            href: http://uptime.home.arpa/status/homelab
+            href: http://uptime.home.arpa/status/home
             description: Homelab service uptime
             icon: uptime-kuma.png
-            widget:
-              type: uptimekuma
-              url: http://uptime.home.arpa
-              slug: homelab
+             widget:
+               type: uptimekuma
+              url: http://uptime-kuma.uptime-kuma.svc.cluster.local:3001
+              slug: home
               fields: ["up", "down", "uptime", "incident"]
-
+    
     - Infrastructure:
         - Kubernetes:
             href: https://github.com/QianDiLin/homelab-yaml
@@ -123,7 +123,7 @@ data:
 
   widgets.yaml: |
     - search:
-        provider: duckduckgo
+        provider: google
         target: _blank
 
     - resources:
