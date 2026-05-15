@@ -28,13 +28,13 @@ data:
   services.yaml: |
     - Infrastructure:
         - Kubernetes:
-            href: http://192.168.1.240
+            href: https://github.com/QianDiLin/homelab-yaml
             description: Talos Kubernetes cluster
             icon: kubernetes.png
 
         - Traefik:
-            href: http://192.168.1.240
-            description: Kubernetes ingress controller
+            href: http://localhost:8080/dashboard/#/
+            description: Dashboard via local port-forward
             icon: traefik.png
 
         - Longhorn:
