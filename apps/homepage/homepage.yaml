@@ -40,15 +40,12 @@ data:
                 - field: download
                     label: Download
                     format: text
-
                 - field: upload
                     label: Upload
                     format: text
-
                  - field: ping
                     label: Ping
                     format: text
-
                  - field: last_run
                     label: Last Run
                     format: text
