@@ -17,6 +17,20 @@ spec:
         app: speedtest-tracker
 
     spec:
+      initContainers:
+        - name: init-db
+          image: busybox
+          command:
+            - sh
+            - -c
+            - |
+              mkdir -p /config
+              touch /config/database.sqlite
+              chmod 666 /config/database.sqlite
+          volumeMounts:
+            - name: speedtest-data
+              mountPath: /config
+
       containers:
         - name: speedtest-tracker
           image: ghcr.io/alexjustesen/speedtest-tracker:latest
