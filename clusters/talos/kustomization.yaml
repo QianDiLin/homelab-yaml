@@ -10,3 +10,4 @@ resources:
   - ../../apps/forgejo
   - ../../apps/proxmox
   - ../../apps/monitoring
+  - ../../apps/speedtest
