@@ -30,6 +30,7 @@ data:
 
   services.yaml: |
     - Status:
+        
         - Internet Speed:
             icon: mdi-speedometer
             widget:
@@ -38,17 +39,17 @@ data:
                 refreshInterval: 300000
                 mappings:
                 - field: download
-                    label: Download
-                    format: text
+                  label: Download
+                  format: text
                 - field: upload
-                    label: Upload
-                    format: text
-                 - field: ping
-                    label: Ping
-                    format: text
-                 - field: last_run
-                    label: Last Run
-                    format: text
+                  label: Upload
+                  format: text
+                - field: ping
+                  label: Ping
+                  format: text
+                - field: last_run
+                  label: Last Run
+                  format: text
     
         - Pi-hole:
             href: http://192.168.1.10
