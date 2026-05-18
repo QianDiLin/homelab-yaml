@@ -33,7 +33,7 @@ spec:
 
       containers:
         - name: speedtest-tracker
-          image: ghcr.io/alexjustesen/speedtest-tracker:latest
+          image: lscr.io/linuxserver/speedtest-tracker:latest
           imagePullPolicy: Always
 
           ports:
@@ -41,7 +41,10 @@ spec:
 
           env:
             - name: APP_KEY
-              value: base64:SomeRandomStringChangeMe123456789
+              valueFrom:
+                secretKeyRef:
+                name: speedtest-secrets
+                key: APP_KEY
 
             - name: DB_CONNECTION
               value: sqlite
