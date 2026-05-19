@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - homepage.yaml
   - deployment.yaml
+
 configMapGenerator:
   - name: homepage-background
     namespace: homepage
