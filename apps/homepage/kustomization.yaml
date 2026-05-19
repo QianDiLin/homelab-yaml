@@ -3,3 +3,11 @@ kind: Kustomization
 resources:
   - homepage.yaml
   - deployment.yaml
+configMapGenerator:
+  - name: homepage-background
+    namespace: homepage
+    files:
+      - background.jpg=images/background.jpg
+
+generatorOptions:
+  disableNameSuffixHash: true
