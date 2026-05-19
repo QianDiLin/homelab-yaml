@@ -13,7 +13,7 @@ data:
     useEqualHeights: true
 
     background:
-      image: /background.jpg
+      image: /images/background.jpg
       blur: md
       saturate: 70
       brightness: 45
