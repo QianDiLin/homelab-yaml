@@ -46,9 +46,15 @@ spec:
             - mountPath: /app/config/kubernetes.yaml
               name: homepage-config
               subPath: kubernetes.yaml
+            - mountPath: /app/public/images/background.jpg
+              name: homepage-background
+              subPath: background.jpg
       volumes:
         - name: homepage-data
           emptyDir: {}
         - name: homepage-config
           configMap:
             name: homepage-config
+        - name: homepage-background
+          configMap:
+            name: homepage-background

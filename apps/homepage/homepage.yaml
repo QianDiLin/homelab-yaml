@@ -10,23 +10,36 @@ data:
     theme: dark
     color: slate
     headerStyle: boxed
+    useEqualHeights: true
+
+    background:
+      image: /images/background.jpg
+      blur: md
+      saturate: 70
+      brightness: 45
+      opacity: 65
 
     layout:
       Status:
         style: column
         columns: 1
+        header: false
       Infrastructure:
         style: column
         columns: 2
+        header: false
       Apps:
         style: column
         columns: 2
+        header: false
       Network:
         style: column
         columns: 2
+        header: false
       Monitoring:
         style: column
         columns: 2
+        header: false
 
   services.yaml: |
     - Status:
@@ -110,17 +123,31 @@ data:
             description: Password manager
             icon: vaultwarden.png
 
+        - n8n:
+            href: http://n8n.home.arpa
+            description: Workflow automation and homelab API webhooks
+            icon: n8n.png
+
     - Network:
         - OPNsense:
             href: https://192.168.1.1
             description: Firewall, router, VLANs, and DHCP
             icon: opnsense.png
 
+        - Tailscale:
+            href: https://login.tailscale.com/admin/machines
+            description: Private mesh VPN and remote access
+            icon: tailscale.png
+
         - MetalLB:
             href: http://192.168.1.240
             description: Kubernetes LoadBalancer IP service
             icon: kubernetes.png
 
+        - TrueNAS:
+            href: http://192.168.1.143/ui/signin
+            description: NAS storage, shares, and backups
+            icon: truenas.png
 
   bookmarks.yaml: |
     - Homelab:
@@ -132,6 +159,15 @@ data:
 
         - Pi-hole:
             - href: http://pi.hole/admin
+
+        - TrueNAS:
+            - href: http://192.168.1.143/ui/signin
+
+        - Tailscale:
+            - href: https://login.tailscale.com/admin/machines
+
+        - n8n:
+            - href: http://n8n.home.arpa
 
     - Learning:
         - Kubernetes Docs:
