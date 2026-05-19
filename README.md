@@ -279,44 +279,6 @@ http://homeassistant.home.arpa
 This service allows the homelab to connect infrastructure practice with real home automation use cases.
 
 
-### Homepage Dashboard
-
-![Homepage Dashboard](images/homepage-dashboard.png)
-
-The Homepage dashboard provides a central landing page for the homelab and links to the main self-hosted services.
-
-### Kubernetes Cluster Nodes
-
-![Kubernetes Nodes](images/kubernetes-nodes.png)
-
-This screenshot shows the Talos Kubernetes nodes running and reachable from the Windows administration PC using `kubectl`.
-
-### Traefik Ingress Dashboard
-
-![Traefik Dashboard](images/traefik-dashboard.png)
-
-The Traefik dashboard shows ingress routing, routers, services, and middleware used to expose Kubernetes applications through internal hostnames.
-
-### Longhorn Storage Dashboard
-
-![Longhorn Dashboard](images/longhorn-dashboard.png)
-
-Longhorn provides persistent storage for Kubernetes workloads and allows storage health, volumes, replicas, and nodes to be monitored from a web dashboard.
-
-### Grafana Monitoring
-
-![Grafana Dashboard](images/grafana-dashboard.png)
-
-Grafana is used to visualize Kubernetes and homelab monitoring data from the Prometheus stack.
-
-### Proxmox Virtual Machines
-
-![Proxmox VMs](images/proxmox-vms.png)
-
-The Proxmox view shows the virtual machines used to run OPNsense, Pi-hole, Talos Kubernetes nodes, and lab/test systems.
-
-Before uploading screenshots, sensitive information such as passwords, tokens, private keys, public IP addresses, and personal email addresses should be hidden or cropped out.
-
 ## Repository Structure
 
 This repository stores the YAML configuration used to manage the Kubernetes homelab.
