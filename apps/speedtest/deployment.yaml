@@ -64,4 +64,5 @@ spec:
 
       volumes:
         - name: speedtest-data
-          emptyDir: {}
+          persistentVolumeClaim:
+          claimName: speedtest-data
