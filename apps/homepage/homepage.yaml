@@ -42,8 +42,7 @@ data:
         header: false
 
   services.yaml: |
-    - Status:
-        
+    - Status: 
         - Internet Speed:
             icon: mdi-speedometer
             widget:
