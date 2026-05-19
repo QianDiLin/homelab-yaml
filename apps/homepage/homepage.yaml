@@ -13,7 +13,7 @@ data:
     useEqualHeights: true
 
     background:
-      image: /images/background.jpg
+      image: https://raw.githubusercontent.com/QianDiLin/homelab-yaml/main/apps/homepage/images/background.jpg
       blur: md
       saturate: 70
       brightness: 45
