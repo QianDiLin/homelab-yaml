@@ -183,10 +183,18 @@ data:
         provider: google
         target: _blank
 
-    - resources:
-        cpu: true
-        memory: true
-        disk: /
+    - kubernetes:
+        cluster:
+          show: true
+          cpu: true
+          memory: true
+          showLabel: true
+          label: "cluster"
+        nodes:
+          show: true
+          cpu: true
+          memory: true
+          showLabel: true
 
   docker.yaml: |
     {}
