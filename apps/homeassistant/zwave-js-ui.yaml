@@ -1,0 +1,94 @@
+@'
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: zwave-js-ui-data
+  namespace: homeassistant
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zwave-js-ui
+  namespace: homeassistant
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zwave-js-ui
+  template:
+    metadata:
+      labels:
+        app: zwave-js-ui
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: talos-b1j-krv
+      containers:
+        - name: zwave-js-ui
+          image: zwavejs/zwave-js-ui:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: web
+              containerPort: 8091
+            - name: websocket
+              containerPort: 3000
+          env:
+            - name: TZ
+              value: America/New_York
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: data
+              mountPath: /usr/src/app/store
+            - name: zwave-usb
+              mountPath: /dev/zwave
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: zwave-js-ui-data
+        - name: zwave-usb
+          hostPath:
+            path: /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_f6cb90915e9bed119b54e749e259fb3e-if00-port0
+            type: CharDevice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zwave-js-ui
+  namespace: homeassistant
+spec:
+  selector:
+    app: zwave-js-ui
+  ports:
+    - name: web
+      port: 8091
+      targetPort: 8091
+    - name: websocket
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: zwave-js-ui
+  namespace: homeassistant
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: zwave.home.arpa
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: zwave-js-ui
+                port:
+                  number: 8091
+'@ | Set-Content -Path apps\homeassistant\zwave-js-ui.yaml
