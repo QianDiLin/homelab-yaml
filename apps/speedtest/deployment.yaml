@@ -65,4 +65,4 @@ spec:
       volumes:
         - name: speedtest-data
           persistentVolumeClaim:
-          claimName: speedtest-data
+            claimName: speedtest-data
