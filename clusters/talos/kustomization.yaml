@@ -7,7 +7,6 @@ resources:
   - ../../apps/n8n
   - ../../apps/homepage
   - ../../apps/homeassistant
-  - ../../apps/forgejo
   - ../../apps/proxmox
   - ../../apps/monitoring
   - ../../apps/speedtest
