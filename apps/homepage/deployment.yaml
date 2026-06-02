@@ -18,6 +18,16 @@ spec:
         - name: homepage
           image: ghcr.io/gethomepage/homepage:latest
           imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            seccompProfile:
+              type: RuntimeDefault
           env:
             - name: HOMEPAGE_ALLOWED_HOSTS
               value: homepage.home.arpa,192.168.1.240
