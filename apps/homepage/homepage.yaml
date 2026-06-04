@@ -200,4 +200,4 @@ data:
     {}
 
   kubernetes.yaml: |
-    mode: disabled
+    mode: cluster
