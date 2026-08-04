@@ -18,6 +18,8 @@ metadata:
   namespace: homeassistant
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: homeassistant
@@ -26,9 +28,13 @@ spec:
       labels:
         app: homeassistant
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: talos-b1j-krv
       containers:
         - name: homeassistant
           image: ghcr.io/home-assistant/home-assistant:stable
+          securityContext:
+            privileged: true
           ports:
             - containerPort: 8123
           env:
@@ -37,10 +43,16 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
+            - name: zigbee-usb
+              mountPath: /dev/zigbee
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: homeassistant-config
+        - name: zigbee-usb
+          hostPath:
+            path: /dev/serial/by-id/usb-Itead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_V2_72d64b94bc78f01185b7ace70ba521c7-if00-port0
+            type: CharDevice
 ---
 apiVersion: v1
 kind: Service
