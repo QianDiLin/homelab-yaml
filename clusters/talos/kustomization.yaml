@@ -12,3 +12,4 @@ resources:
   - ../../apps/monitoring
   - ../../apps/speedtest
   - ../../apps/forgejo
+  - ../../apps/vaultwarden

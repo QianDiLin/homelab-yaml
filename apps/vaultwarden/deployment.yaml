@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vaultwarden
+  namespace: vaultwarden
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vaultwarden
+  template:
+    metadata:
+      labels:
+        app: vaultwarden
+    spec:
+      containers:
+        - name: vaultwarden
+          image: vaultwarden/server:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: DOMAIN
+              value: https://vault.home.saolmon.com
+            - name: SIGNUPS_ALLOWED
+              value: "true"
+            - name: INVITATIONS_ALLOWED
+              value: "true"
+            - name: ADMIN_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: vaultwarden-secret
+                  key: ADMIN_TOKEN
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: vaultwarden-data
+              mountPath: /data
+      volumes:
+        - name: vaultwarden-data
+          persistentVolumeClaim:
+            claimName: vaultwarden-data
