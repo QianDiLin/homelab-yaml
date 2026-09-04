@@ -4,6 +4,7 @@ resources:
   - ../../infrastructure/namespaces
   - ../../infrastructure/metallb
   - ../../infrastructure/longhorn
+  - ../../infrastructure/cert-manager
   - ../../apps/n8n
   - ../../apps/homepage
   - ../../apps/homeassistant
